@@ -8,18 +8,22 @@ async function loadPokedex() {
 
   // 1 - .length
   // ➡️ Calcule le nombre total de Pokémon dans le Pokedex.
+  // La propriété length permet d'obtenir le nombre d'éléments dans un tableau.
 
   const totalPokemon = pokedex.length;
   console.log("Nombre total de Pokémon :", totalPokemon);
 
   // 2 - .map()
   // ➡️ Crée un nouveau tableau contenant uniquement les noms des Pokémon.
+  // La méthode map() parcourt chaque élément du tableau et renvoie un nouveau tableau contenant le résultat de la fonction appliquée à chaque élément.
 
   const namePokemon = pokedex.map((pokemon) => pokemon.name);
   console.log("Nom des Pokémon :", namePokemon);
 
   // 3 - Math.random()
   // ➡️ Sélectionne un Pokémon aléatoire et affiche son nom.
+  // Math.random() génère un nombre décimal aléatoire entre 0 et 1.
+  // Math.floor() arrondit à l'entier inférieur pour obtenir un index valide dans le tableau.
 
   //const randomIndex = Math.floor(Math.random() * 152); (Non dynamique)
   const randomIndex = Math.floor(Math.random() * pokedex.length);
@@ -27,7 +31,8 @@ async function loadPokedex() {
   console.log("🎲 Pokémon aléatoire :", randomPokemon.name);
 
   // 4 - .filter()
-  // ➡️ Récupère tous les Pokémon de type "Fire" et "Grass".
+  // ➡️ Récupère tous les Pokémon de type "Fire" et "Grass"
+  // La méthode filter() crée un nouveau tableau avec les éléments qui passent le test défini dans la fonction callback. Elle retourne true pour inclure l'élément, false pour l'exclure.
 
   const firePokemon = pokedex.filter((pokemon) =>
     pokemon.type.includes("Fire")
@@ -41,9 +46,10 @@ async function loadPokedex() {
 
   // 5 - .find()
   // ➡️ Récupère un Pokémon de type "Water"
+  // La méthode find() retourne le premier élément du tableau qui satisfait la condition. Elle renvoie undefined si aucun élément ne correspond.
 
-  //Utilise pokemon.type === "Water" si type est une string.
-  //Utilise pokemon.type.includes("Water") si type est un tableau.
+  //On utilise pokemon.type === "Water" si type est une string.
+  //On utilise pokemon.type.includes("Water") si type est un tableau.
   const waterPokemon = pokedex.find((pokemon) =>
     pokemon.type.includes("Water")
   );
@@ -51,11 +57,9 @@ async function loadPokedex() {
 
   // 6 - .sort()
   // ➡️ Trie les Pokémon par poids du plus léger au plus lourd.
+  // La méthode sort() trie les éléments d'un tableau en place. Elle prend une fonction de comparaison qui détermine l’ordre de tri.
 
-  //la méthode .filter() fonctionne de manière à exécuter la fonction de rappel (callback) pour chaque élément du tableau,
-  //mais elle n'inclut dans le tableau final que les éléments pour lesquels le résultat de la fonction est true.
-  //Si la conversion échoue et que la fonction retourne false, l'élément est simplement exclu du tableau filtré.
-
+  // Ici on convertit les poids en nombre avec parseFloat pour comparer des valeurs numériques.
   const weightPokemon = pokedex
     .filter((pokemon) => !isNaN(parseFloat(pokemon.weight)))
     .sort((a, b) => parseFloat(a.weight) - parseFloat(b.weight));
@@ -63,6 +67,7 @@ async function loadPokedex() {
 
   // 7. .reduce()
   // ➡️ Calcule le poids total de tous les Pokémon.
+  // La méthode reduce() parcourt le tableau et applique une fonction à un accumulateur et à chaque élément du tableau pour réduire le tableau à une seule valeur.
 
   const totalWeightPokemon = pokedex
     .filter((pokemon) => !isNaN(parseFloat(pokemon.weight)))
@@ -74,7 +79,8 @@ async function loadPokedex() {
   console.log("Poids total de tous les Pokémon :", totalWeightPokemon);
 
   // 8 - .every()
-  // ➡️ Vérifier si tous les Pokémon font plus de 10 Kg
+  // ➡️ Vérifier si tous les Pokémon font plus de 10 Kg.
+  // La méthode every() teste si tous les éléments du tableau passent le test implémenté par la fonction fournie. Retourne true si c’est le cas pour tous, sinon false.
 
   const allHaveMoreThan10kg = pokedex
     .filter((pokemon) => !isNaN(parseFloat(pokemon.weight)))
@@ -83,16 +89,17 @@ async function loadPokedex() {
 
   // 9 - .some()
   // ➡️ Vérifier s'il y a un Pokémon de type "Dragon"
+  // La méthode some() teste si au moins un élément du tableau passe le test implémenté par la fonction fournie. Retourne true dès qu’un élément valide la condition.
 
   const hasDragonType = pokedex.some((pokemon) =>
     pokemon.type.includes("Dragon")
   );
   console.log("🐉 Y a-t-il un Pokémon de type Dragon ?", hasDragonType);
 
-  //   10 - .push()
+  // 10 - .push()
   // ➡️ Ajoute un nouveau Pokémon à la fin de la liste.
+  // La méthode push() modifie le tableau original en ajoutant un ou plusieurs éléments à la fin du tableau et renvoie la nouvelle longueur du tableau mais pas l'élément ajouté.
 
-  //La méthode push() en JavaScript modifie le tableau original et renvoie la nouvelle longueur du tableau, pas l'élément ajouté.
   pokedex.push({
     id: 152,
     name: "Tortank Gigamax",
@@ -104,6 +111,7 @@ async function loadPokedex() {
 
   // 11 - .splice()
   // ➡️ Ajoute un nouveau Pokémon : "Charizard Gigamax"
+  // La méthode splice() modifie le contenu d'un tableau en supprimant, remplaçant ou ajoutant des éléments à partir d'un index donné. Elle retourne un tableau contenant les éléments supprimés.
 
   pokedex.splice(151, 1, {
     id: 152,
@@ -114,8 +122,9 @@ async function loadPokedex() {
   //index 151, car l'indexation commence à 0
   console.log("➕ Liste après ajout de Charizard Gigamax :", pokedex[151]);
 
-  //   12 - .shift()
+  // 12 - .shift()
   // ➡️ Retire le premier Pokémon de la liste et affiche-le.
+  // La méthode shift() retire le premier élément d'un tableau et le retourne. Elle modifie la longueur du tableau.
 
   const firstPokemon = pokedex.shift();
   console.log("Premier Pokémon de la liste :", firstPokemon);
@@ -123,16 +132,25 @@ async function loadPokedex() {
 
   // 13 - .pop()
   // ➡️ Retire le dernier Pokémon de la liste et affiche-le.
+  // La méthode pop() retire le dernier élément d’un tableau et le retourne. Elle modifie la longueur du tableau.
 
   const lastPokemon = pokedex.pop();
   console.log("Dernier Pokémon de la liste :", lastPokemon);
   console.log("Nouveau Pokédex :", pokedex);
 
-  // 14 - Boucle For of
+  // 14 - .forEach()
+  // ➡️ Affiche une phrase avec le nom de chaque Pokémon de type "Grass"
+  // La méthode forEach() exécute une fonction donnée une fois pour chaque élément du tableau.
+
+  grassPokemon.forEach((pokemon) => {
+    console.log(`Hello je suis ${pokemon.name}`);
+  });
+
+  // 15 - Boucle For
   // ➡️ Trouve le Pokémon le plus lourd.
 
-  //Si array est garanti d’avoir au moins un élément, alors initialiser avec array[0] est plus efficace.
-  //Si array peut être vide, alors la première approche (let heaviestPokemon;) est plus sécurisée.
+  //La boucle for avec index est une structure de contrôle qui permet de parcourir un tableau ou exécuter des instructions un nombre précis de fois en utilisant un compteur (souvent appelé i) qui représente l’index courant dans le tableau.
+
   let heaviestPokemon1;
   let maxWeight1 = -Infinity;
   for (let i = 0; i < pokedex.length; i++) {
@@ -143,6 +161,8 @@ async function loadPokedex() {
     }
   }
   console.log("⚖️ Pokemon le plus lourd :", heaviestPokemon1);
+
+  // Même principe que la boucle for avec index mais avec for...of pour parcourir directement les éléments du tableau.
 
   let heaviestPokemon2;
   let maxWeight2 = -Infinity;
@@ -155,12 +175,9 @@ async function loadPokedex() {
   }
   console.log("Pokemon le plus lourd :", heaviestPokemon2);
 
-  // 15 - .forEach()
-  // ➡️ Affiche une phrase avec le nom de chaque Pokémon de type "Grass".
+  // Note : Ici on initialise une variable maxWeight à -Infinity et on parcourt chaque élément. Si le poids du Pokémon est supérieur à maxWeight, on met à jour maxWeight et le nom du Pokémon.
+  // Si array est garanti d’avoir au moins un élément, alors initialiser avec array[0] est plus efficace mais si array peut être vide, alors la première approche (let heaviestPokemon;) est plus sécurisée.
 
-  grassPokemon.forEach((pokemon) => {
-    console.log(`Hello je suis ${pokemon.name}`);
-  });
 }
 
 loadPokedex();
